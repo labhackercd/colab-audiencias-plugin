@@ -6,7 +6,7 @@ class ColabAudienciasPluginProxyView(ColabProxyView):
     app_label = 'colab_audiencias'
     diazo_theme_template = 'proxy/audiencias.html'
     rewrite = (
-        (r'^/audiencias/accounts/login/?$', r'{}'.format(settings.LOGIN_URL)),
+        (r'^/audiencias/login/?$', r'{}'.format(settings.LOGIN_URL)),
     )
 
     def get_proxy_request_headers(self, request):
