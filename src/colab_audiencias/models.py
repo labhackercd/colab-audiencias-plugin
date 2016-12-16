@@ -21,6 +21,9 @@ class AudienciasVideo(models.Model):
         prefix = helpers.get_plugin_prefix('colab_audiencias', regex=False)
         return '/{}sala/{}'.format(prefix, self.id)
 
+    def questions_count(self):
+        return self.questions.all().count()
+
 
 class AudienciasAgenda(models.Model):
     id = models.IntegerField(primary_key=True)
