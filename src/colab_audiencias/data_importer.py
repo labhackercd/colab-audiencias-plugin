@@ -22,7 +22,6 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
 
         if upstream[-1] == '/':
             upstream = upstream[:-1]
-
         return u'{}{}?{}'.format(upstream, path, params)
 
     def get_json_data(self, resource_name, page=1):
@@ -68,6 +67,8 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
                     dt_value = data[field.name]
                     if dt_value:
                         value = parse_datetime(dt_value)
+                    else:
+                        value = None
                 else:
                     value = data[field.name]
 
