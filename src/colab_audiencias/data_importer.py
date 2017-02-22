@@ -3,6 +3,7 @@ from django.db.models.fields import DateTimeField
 from colab.plugins.data import PluginDataImporter
 from django.utils.dateparse import parse_datetime
 from django.contrib.auth import get_user_model
+from django.template.defaultfilters import slugify
 from colab_audiencias import models
 import requests
 import urllib
@@ -56,8 +57,16 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
         for field in obj._meta.fields:
             try:
                 if field.name == 'user':
-                    user = User.objects.get(email=data['user']['email'])
+                    user = User.objects.get(username=data['user']['username'])
                     obj.user = user
+                    continue
+
+                if field.name == 'email':
+                    if not data['email']:
+                        email = slugify(data['username']) + "@email.com"
+                    else:
+                        email = data['email']
+                    obj.email = email
                     continue
 
                 if field.name == 'video':
@@ -76,6 +85,14 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
                 continue
 
         return obj
+
+    def fetch_users(self):
+        json_data = self.get_json_data('user')
+        already_users = User.objects.values_list('email', flat=True)
+        for data in json_data:
+            user = self.fill_object_data(User, data)
+            if user.email not in already_users:
+                user.save()
 
     def fetch_videos(self):
         json_data = self.get_json_data('video')
