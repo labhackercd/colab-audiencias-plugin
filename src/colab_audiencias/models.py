@@ -46,6 +46,18 @@ class AudienciasRoom(models.Model):
         prefix = helpers.get_plugin_prefix('colab_audiencias', regex=False)
         return '/{}sala/{}'.format(prefix, self.id)
 
+    def get_agenda(self):
+        if self.agenda.commission:
+            return self.agenda.commission
+        else:
+            return ''
+
+    def get_video(self):
+        if self.video.title:
+            return self.video.title
+        else:
+            return ''
+
     def questions_count(self):
         return self.questions.all().count()
 

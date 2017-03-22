@@ -2,14 +2,11 @@
 {% block content %}
   <div class="row">
     <div class="col-md-12">
-      <small>
-        {% highlight result.theme with query %}
-      </small><br>
       <h4><a href="{{result.url}}">
-        {% highlight result.title with query %}
+        {% highlight result.agenda with query %}
       </a></h4>
       <p>
-        {% highlight result.description with query %}
+        {% highlight result.video with query %}
       </p>
       <small class="colab-result-register">{% trans "Registred in" %}:
           <strong>{{result.type}}</strong>
