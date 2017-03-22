@@ -17,13 +17,6 @@ class AudienciasVideo(models.Model):
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField(editable=False)
 
-    def get_url(self):
-        prefix = helpers.get_plugin_prefix('colab_audiencias', regex=False)
-        return '/{}sala/{}'.format(prefix, self.id)
-
-    def questions_count(self):
-        return self.questions.all().count()
-
 
 class AudienciasAgenda(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -32,13 +25,34 @@ class AudienciasAgenda(models.Model):
     location = models.CharField(max_length=200, null=True, blank=True)
     situation = models.CharField(max_length=200, null=True, blank=True)
     commission = models.CharField(max_length=200, null=True, blank=True)
+    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField(editable=False)
 
 
+class AudienciasRoom(models.Model):
+    id = models.IntegerField(primary_key=True)
+    agenda = models.ForeignKey(AudienciasAgenda, related_name='room',
+                               null=True, blank=True)
+    video = models.ForeignKey(AudienciasVideo, related_name='room',
+                              null=True, blank=True)
+    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
+    online_users = models.IntegerField(default=0)
+    max_online_users = models.IntegerField(default=0)
+    created = models.DateTimeField(editable=False)
+    modified = models.DateTimeField(editable=False)
+
+    def get_url(self):
+        prefix = helpers.get_plugin_prefix('colab_audiencias', regex=False)
+        return '/{}sala/{}'.format(prefix, self.id)
+
+    def questions_count(self):
+        return self.questions.all().count()
+
+
 class AudienciasQuestion(models.Model):
     id = models.IntegerField(primary_key=True)
-    video = models.ForeignKey(AudienciasVideo, related_name='questions')
+    room = models.ForeignKey(AudienciasRoom, related_name='questions')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.TextField()
     answer_time = models.CharField(max_length=200, null=True, blank=True)
