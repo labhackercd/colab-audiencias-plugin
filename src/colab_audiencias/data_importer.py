@@ -56,7 +56,7 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
         for field in obj._meta.fields:
             try:
                 if field.name == 'user':
-                    user = User.objects.get(username=data['user']['email'])
+                    user = User.objects.get(email=data['user']['email'])
                     obj.user = user
                     continue
 
