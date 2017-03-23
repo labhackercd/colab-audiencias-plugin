@@ -39,6 +39,7 @@ class AudienciasRoom(models.Model):
     cod_reunion = models.CharField(max_length=200, null=True, blank=True)
     online_users = models.IntegerField(default=0)
     max_online_users = models.IntegerField(default=0)
+    is_visible = models.BooleanField(default=False)
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField(editable=False)
 

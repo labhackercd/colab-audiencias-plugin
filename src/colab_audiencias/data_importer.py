@@ -72,6 +72,14 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
                     obj.video_id = data['video']
                     continue
 
+                if field.name == 'agenda':
+                    obj.agenda_id = data['agenda']
+                    continue
+
+                if field.name == 'room':
+                    obj.room_id = data['room']
+                    continue
+
                 if isinstance(field, DateTimeField):
                     dt_value = data[field.name]
                     if dt_value:
@@ -95,6 +103,12 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
             if user.email not in already_users:
                 user.save()
 
+    def fetch_rooms(self):
+        json_data = self.get_json_data('room')
+        for data in json_data:
+            room = self.fill_object_data(models.AudienciasRoom, data)
+            room.save()
+
     def fetch_videos(self):
         json_data = self.get_json_data('video')
         for data in json_data:
@@ -115,5 +129,6 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
 
     def fetch_data(self):
         self.fetch_videos()
-        self.fetch_questions()
         self.fetch_agendas()
+        self.fetch_rooms()
+        self.fetch_questions()
