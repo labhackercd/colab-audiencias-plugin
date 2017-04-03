@@ -3,61 +3,28 @@ from django.conf import settings
 from colab.plugins import helpers
 
 
-class AudienciasVideo(models.Model):
-    id = models.IntegerField(primary_key=True)
-    videoId = models.CharField(max_length=200, unique=True)
-    thumb_default = models.URLField(null=True, blank=True)
-    thumb_medium = models.URLField(null=True, blank=True)
-    thumb_high = models.URLField(null=True, blank=True)
-    title = models.CharField(max_length=200, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    published_date = models.DateTimeField(auto_now=True)
-    closed_date = models.DateTimeField(null=True, blank=True)
-    slug = models.SlugField(max_length=200, blank=True)
-    created = models.DateTimeField(editable=False)
-    modified = models.DateTimeField(editable=False)
-
-
-class AudienciasAgenda(models.Model):
-    id = models.IntegerField(primary_key=True)
-    date = models.DateTimeField(null=True, blank=True)
-    session = models.CharField(max_length=200, null=True, blank=True)
-    location = models.CharField(max_length=200, null=True, blank=True)
-    situation = models.CharField(max_length=200, null=True, blank=True)
-    commission = models.CharField(max_length=200, null=True, blank=True)
-    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
-    created = models.DateTimeField(editable=False)
-    modified = models.DateTimeField(editable=False)
-
-
 class AudienciasRoom(models.Model):
+    YOUTUBE_STATUS_CHOICES = (
+        (0, 'Sem transmissão'),
+        (1, 'Em andamento'),
+        (2, 'Transmissão encerrada')
+    )
     id = models.IntegerField(primary_key=True)
-    agenda = models.ForeignKey(AudienciasAgenda, related_name='room',
-                               null=True, blank=True)
-    video = models.ForeignKey(AudienciasVideo, related_name='room',
-                              null=True, blank=True)
     cod_reunion = models.CharField(max_length=200, null=True, blank=True)
     online_users = models.IntegerField(default=0)
     max_online_users = models.IntegerField(default=0)
     is_visible = models.BooleanField(default=False)
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField(editable=False)
+    legislative_body_alias = models.CharField(max_length=200, null=True,
+                                              blank=True)
+    youtube_status = models.IntegerField(choices=YOUTUBE_STATUS_CHOICES,
+                                         default=0)
+    youtube_id = models.CharField(max_length=200, null=True, blank=True)
 
     def get_url(self):
         prefix = helpers.get_plugin_prefix('colab_audiencias', regex=False)
         return '/{}sala/{}'.format(prefix, self.id)
-
-    def get_agenda(self):
-        if self.agenda.commission:
-            return self.agenda.commission
-        else:
-            return ''
-
-    def get_video(self):
-        if self.video.title:
-            return self.video.title
-        else:
-            return ''
 
     def questions_count(self):
         return self.questions.all().count()
