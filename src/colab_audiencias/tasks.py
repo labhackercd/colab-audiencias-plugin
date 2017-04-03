@@ -1,10 +1,13 @@
+from django.contrib.sites.models import Site
 from colab.plugins import helpers
 import requests
 import json
 
 
 def login_user(sender, user, request, **kwargs):
-    config = helpers.get_plugin_config('colab_audiencias')
+    prefix = helpers.get_plugin_prefix('colab_audiencias', regex=False)
+    base_url = Site.objects.get_current().domain
+    base_url = "{}/{}".format(base_url, prefix)
     user_data = {
         'email': user.email,
         'name': user.get_full_name(),
@@ -14,7 +17,7 @@ def login_user(sender, user, request, **kwargs):
     headers = {'Auth-user': user.username,
                'Remote-User-Data': remote_user_data}
 
-    response = requests.get(config['upstream'], headers=headers)
+    response = requests.get(base_url, headers=headers)
     session = response.cookies.get('audiencias_session')
     request.COOKIES.set("audiencias_session", session)
 
