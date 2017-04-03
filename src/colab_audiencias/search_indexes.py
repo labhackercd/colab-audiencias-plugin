@@ -8,8 +8,10 @@ class AudienciasRoomIndex(indexes.SearchIndex, indexes.Indexable):
     type = indexes.EdgeNgramField()
 
     # Model fields
-    agenda = indexes.EdgeNgramField(model_attr='get_agenda')
-    video = indexes.EdgeNgramField(model_attr='get_video')
+    legislative_body_alias = indexes.EdgeNgramField(
+        model_attr='legislative_body_alias')
+    youtube_status = indexes.EdgeNgramField(model_attr='youtube_status')
+    youtube_id = indexes.EdgeNgramField(model_attr='youtube_id')
     cod_reunion = indexes.EdgeNgramField(model_attr='cod_reunion')
     online_users = indexes.EdgeNgramField(model_attr='online_users')
     max_online_users = indexes.EdgeNgramField(model_attr='max_online_users')
