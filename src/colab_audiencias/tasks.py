@@ -8,10 +8,13 @@ def login_user(sender, user, request, **kwargs):
     prefix = helpers.get_plugin_prefix('colab_audiencias', regex=False)
     base_url = Site.objects.get_current().domain
     base_url = "{}/{}".format(base_url, prefix)
+    avatar = None
+    if hasattr(user.profile.avatar, 'url'):
+        avatar = user.profile.avatar.url
     user_data = {
         'email': user.email,
         'name': user.get_full_name(),
-        'avatar': user.profile.avatar.url
+        'avatar': avatar
     }
     remote_user_data = json.dumps(user_data)
     headers = {'Auth-user': user.username,
