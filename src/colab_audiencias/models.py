@@ -20,6 +20,10 @@ class AudienciasRoom(models.Model):
     modified = models.DateTimeField(editable=False)
     legislative_body_alias = models.CharField(max_length=200, null=True,
                                               blank=True)
+    reunion_type = models.CharField(max_length=200, null=True,
+                                    blank=True)
+    title_reunion = models.CharField(max_length=200, null=True,
+                                     blank=True)
     youtube_status = models.IntegerField(choices=YOUTUBE_STATUS_CHOICES,
                                          default=0)
     youtube_id = models.CharField(max_length=200, null=True, blank=True)
