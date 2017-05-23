@@ -22,6 +22,9 @@ class AudienciasRoom(models.Model):
                                               blank=True)
     reunion_type = models.CharField(max_length=200, null=True,
                                     blank=True)
+    reunion_object = models.TextField(null=True, blank=True)
+    reunion_theme = models.TextField(null=True, blank=True)
+    date = models.DateTimeField(null=True, blank=True)
     title_reunion = models.CharField(max_length=200, null=True,
                                      blank=True)
     youtube_status = models.IntegerField(choices=YOUTUBE_STATUS_CHOICES,

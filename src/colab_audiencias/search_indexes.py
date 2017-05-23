@@ -10,10 +10,10 @@ class AudienciasRoomIndex(indexes.SearchIndex, indexes.Indexable):
     # Model fields
     legislative_body_alias = indexes.EdgeNgramField(
         model_attr='legislative_body_alias')
-    reunion_type = indexes.EdgeNgramField(
-        model_attr='reunion_type')
-    title_reunion = indexes.EdgeNgramField(
-        model_attr='title_reunion')
+    reunion_type = indexes.EdgeNgramField(model_attr='reunion_type')
+    reunion_object = indexes.EdgeNgramField(model_attr='reunion_object')
+    reunion_theme = indexes.EdgeNgramField(model_attr='reunion_theme')
+    title_reunion = indexes.EdgeNgramField(model_attr='title_reunion')
     youtube_status = indexes.EdgeNgramField(model_attr='youtube_status')
     youtube_id = indexes.EdgeNgramField(model_attr='youtube_id')
     cod_reunion = indexes.EdgeNgramField(model_attr='cod_reunion')
