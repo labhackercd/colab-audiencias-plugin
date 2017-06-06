@@ -10,13 +10,16 @@ class AudienciasRoomIndex(indexes.SearchIndex, indexes.Indexable):
     # Model fields
     legislative_body_alias = indexes.EdgeNgramField(
         model_attr='legislative_body_alias')
-    reunion_type = indexes.EdgeNgramField(model_attr='reunion_type')
-    reunion_object = indexes.EdgeNgramField(model_attr='reunion_object')
-    reunion_theme = indexes.EdgeNgramField(model_attr='reunion_theme')
-    title_reunion = indexes.EdgeNgramField(model_attr='title_reunion')
+    reunion_type = indexes.EdgeNgramField(model_attr='reunion_type', null=True)
+    reunion_object = indexes.EdgeNgramField(
+        model_attr='reunion_object', null=True)
+    reunion_theme = indexes.EdgeNgramField(
+        model_attr='reunion_theme', null=True)
+    title_reunion = indexes.EdgeNgramField(
+        model_attr='title_reunion', null=True)
     youtube_status = indexes.EdgeNgramField(model_attr='youtube_status')
-    youtube_id = indexes.EdgeNgramField(model_attr='youtube_id')
-    cod_reunion = indexes.EdgeNgramField(model_attr='cod_reunion')
+    youtube_id = indexes.EdgeNgramField(model_attr='youtube_id', null=True)
+    cod_reunion = indexes.EdgeNgramField(model_attr='cod_reunion', null=True)
     online_users = indexes.EdgeNgramField(model_attr='online_users')
     max_online_users = indexes.EdgeNgramField(model_attr='max_online_users')
     url = indexes.EdgeNgramField(model_attr='get_url')
