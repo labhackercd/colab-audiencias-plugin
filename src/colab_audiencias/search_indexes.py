@@ -25,7 +25,7 @@ class AudienciasRoomIndex(indexes.SearchIndex, indexes.Indexable):
         return models.AudienciasRoom
 
     def prepare_type(self, obj):
-        return u'video'
+        return u'room'
 
     def index_queryset(self, using=None):
         return self.get_model().objects.all()

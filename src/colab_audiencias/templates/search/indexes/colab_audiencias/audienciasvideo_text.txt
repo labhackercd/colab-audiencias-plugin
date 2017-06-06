@@ -1,1 +1,0 @@
-{{object.legislative_body_alias}}
