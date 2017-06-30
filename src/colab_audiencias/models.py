@@ -20,6 +20,8 @@ class AudienciasRoom(models.Model):
     modified = models.DateTimeField(editable=False)
     legislative_body_alias = models.CharField(max_length=200, null=True,
                                               blank=True)
+    legislative_body_initials = models.CharField(max_length=200, null=True,
+                                                 blank=True)
     reunion_type = models.CharField(max_length=200, null=True,
                                     blank=True)
     reunion_object = models.TextField(null=True, blank=True)
