@@ -10,6 +10,17 @@ class AudienciasRoom(models.Model):
         (1, 'Em andamento'),
         (2, 'Transmissão encerrada')
     )
+    STATUS_CHOICES = (
+        (1, 'Não Confirmada'),
+        (2, 'Convocada'),
+        (3, 'Em Andamento'),
+        (4, 'Encerrada'),
+        (5, 'Cancelada'),
+        (6, 'Suspensa'),
+        (7, 'Encerrada (Termo)'),
+        (8, 'Encerrada (Final)'),
+        (9, 'Encerrada(Comunicado)')
+    )
     id = models.IntegerField(primary_key=True)
     cod_reunion = models.CharField(max_length=200, null=True, blank=True)
     online_users = models.IntegerField(default=0)
@@ -27,6 +38,7 @@ class AudienciasRoom(models.Model):
                                     blank=True)
     reunion_object = models.TextField(null=True, blank=True)
     reunion_theme = models.TextField(null=True, blank=True)
+    reunion_status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     date = models.DateTimeField(null=True, blank=True)
     title_reunion = models.CharField(max_length=200, null=True,
                                      blank=True)
