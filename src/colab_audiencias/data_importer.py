@@ -108,5 +108,7 @@ class ColabAudienciasPluginDataImporter(PluginDataImporter):
             question.save()
 
     def fetch_data(self):
+        models.AudienciasRoom.objects.all().delete()
+        models.AudienciasQuestion.objects.all().delete()
         self.fetch_rooms()
         self.fetch_questions()
