@@ -18,7 +18,10 @@ class AudienciasHomeSectionWidget(Widget):
         agenda_videos = audiencias_today.filter(
             youtube_status=0, reunion_status__in=[2, 3]).order_by('date')
 
-        if audiencias_today.count() < 10:
+        if audiencias_today.count() == 0:
+            history_videos = AudienciasRoom.objects.filter(
+                youtube_status=2, is_visible=True).order_by('-date')[:10]
+        elif audiencias_today.count() < 10:
             empty_cards_count = 10 - audiencias_today.count()
             next_agenda = AudienciasRoom.objects.filter(
                 youtube_status=0, is_visible=True,
